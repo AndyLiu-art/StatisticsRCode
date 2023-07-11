@@ -1,0 +1,66 @@
+# 设置工作路径
+setwd("D:\\softwares\\applied statistics\\rcodelearning\\chap40\\sourcecode")
+# 生成matrame数据
+generate_data <- function(row, col) {
+    # 生成矩阵
+    mat <- matrix(rnorm(row * col), nrow = row)
+    return(mat)
+}
+app_method <- function(mat) {
+    start_time <- Sys.time()
+    # 为每一列求均值
+    res <- apply(mat, 2, mean)
+    end_time <- Sys.time()
+    print("apply方法所消耗的时间")
+    print(end_time - start_time)
+    return(res)
+}
+for_method <- function(mat) {
+    start_time <- Sys.time()
+    col <- ncol(mat)
+    # 存储结果的向量
+    resvec <- numeric(col)
+    for (i in 1:col) {
+        resvec[i] <- mean(mat[, i])
+    }
+    end_time <- Sys.time()
+    print("for循环方法所消耗的时间")
+    print(end_time - start_time)
+    return(resvec)
+}
+col <- 10
+row <- 20
+mat <- generate_data(row, col)
+print("-----------------------col=10------------------------")
+res1 <- app_method(mat)
+res2 <- for_method(mat)
+
+col <- 100
+row <- 20
+mat <- generate_data(row, col)
+print("-----------------------col=100------------------------")
+res1 <- app_method(mat)
+res2 <- for_method(mat)
+
+col <- 1000
+row <- 20
+mat <- generate_data(row, col)
+print("-----------------------col=1000------------------------")
+res1 <- app_method(mat)
+res2 <- for_method(mat)
+
+col <- 10000
+row <- 20
+mat <- generate_data(row, col)
+print("-----------------------col=10000------------------------")
+res1 <- app_method(mat)
+res2 <- for_method(mat)
+
+col <- 100000
+row <- 20
+mat <- generate_data(row, col)
+print("-----------------------col=100000------------------------")
+res1 <- app_method(mat)
+res2 <- for_method(mat)
+# 保存工作空间
+save.image("R8.RData")

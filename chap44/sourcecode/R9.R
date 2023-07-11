@@ -1,0 +1,27 @@
+# 加载带有惩罚项的广义线性模型
+library("glmnet")
+# 设置工作路径
+setwd("D:\\softwares\\applied statistics\\rcodelearning\\chap44\\sourcecode")
+# 生成数据
+set.seed(1010)
+x <- matrix(rnorm(100 * 20), 100, 20)
+y <- sample(c(0, 1), 100, replace = TRUE)
+fit <- glmnet(x, y, family = "binomial")
+fitn <- glmnet(x, y, family = binomial(link = cloglog))
+fitr <- glmnet(x, y, family = "binomial", relax = TRUE)
+fitrp <- glmnet(x, y, family = "binomial", relax = TRUE, path = TRUE)
+dev.new()
+pdf("../codeimage/code5.pdf")
+par(mfrow = c(2, 2))
+plot(fit)
+title("Binomial Family", line = 2.5)
+plot(fitn)
+title("Binomial Family link=cloglog", line = 2.5)
+plot(fitr)
+title("Multinomial Family relax", line = 2.5)
+plot(fitrp)
+title("Multinomial Family relax and path", line = 2.5)
+dev.off()
+dev.off()
+# 保存工作空间
+save.image("R9.RData")
